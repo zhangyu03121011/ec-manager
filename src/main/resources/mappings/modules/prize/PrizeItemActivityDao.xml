@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uib.ecmanager.modules.prize.dao.PrizeItemActivityDao">
+    
+	<sql id="prizeItemActivityColumns">
+		a.id AS "id",
+		a.prize_id AS "prizeId",
+		a.award_number AS "awardNumber",
+		a.award_id AS "awardId",
+		a.is_virtual AS "isVirtual",
+		a.number AS "number",
+		a.prize_number AS "prizeNumber",
+		a.probability AS "probability",
+		a.angle AS "angle",
+		a.prize_grade AS "prizeGrade",
+		a.create_date AS "createDate",
+		a.create_by AS "createBy.id",
+		a.update_date AS "updateDate",
+		a.update_by AS "updateBy.id",
+		a.start_date as "startDate",
+		a.end_date as "endDate",
+		p.name AS "name"
+	</sql>
+	
+	<sql id="prizeItemActivityJoins">
+		LEFT JOIN prize_activity p on a.prize_id = p.id
+	</sql>
+    
+	<select id="get" resultType="PrizeItemActivity">
+		SELECT 
+			<include refid="prizeItemActivityColumns"/>
+		FROM prize_item_activity a
+		<include refid="prizeItemActivityJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="PrizeItemActivity">
+		SELECT 
+			<include refid="prizeItemActivityColumns"/>
+		FROM prize_item_activity a
+		<include refid="prizeItemActivityJoins"/>
+		<where>
+			a.del_flag = '0'
+		</where>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PrizeItemActivity">
+		SELECT 
+			<include refid="prizeItemActivityColumns"/>
+		FROM prize_item_activity a
+		<include refid="prizeItemActivityJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO prize_item_activity(
+			id,
+			prize_id,
+			award_number,
+			award_id,
+			is_virtual,
+			number,
+			prize_number,
+			probability,
+			angle,
+			prize_grade,
+			create_date,
+			create_by,
+			update_date,
+			update_by,
+			start_date,
+			end_date
+		) VALUES (
+			#{id},
+			#{prizeId},
+			#{awardNumber},
+			#{awardId},
+			#{isVirtual},
+			#{number},
+			#{prizeNumber},
+			#{probability},
+			#{angle},
+			#{prizeGrade},
+			#{createDate},
+			#{createBy.id},
+			#{updateDate},
+			#{updateBy.id},
+			#{startDate},
+			#{endDate}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE prize_item_activity SET 	
+			prize_id = #{prizeId},
+			award_number = #{awardNumber},
+			award_id = #{awardId},
+			is_virtual = #{isVirtual},
+			number = #{number},
+			prize_number = #{prizeNumber},
+			probability = #{probability},
+			angle = #{angle},
+			prize_grade = #{prizeGrade},
+			update_date = #{updateDate},
+			update_by = #{updateBy.id},
+			start_date = #{startDate},
+			end_date = #{endDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE prize_item_activity SET 
+			del_flag = '1'
+		WHERE id = #{id}
+	</update>
+	
+	<update id="batchUpdateNumber" parameterType="string">
+		UPDATE prize_item_activity SET
+		number = number + 1
+		where id = #{id}
+	</update>
+	
+</mapper>

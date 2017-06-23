@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uib.ecmanager.modules.order.dao.OrderTableReturnsDao">
+
+	<sql id="orderTableReturnsColumns">
+		a.id AS "id",
+		a.return_no AS "returnNo",
+		a.address AS "address",
+		a.area AS "area",
+		a.delivery_corp AS "deliveryCorp",
+		a.freight AS "freight",
+		a.operator AS "operator",
+		a.shipper AS "shipper",
+		a.shipping_method AS "shippingMethod",
+		a.tracking_no AS "trackingNo",
+		a.zip_code AS "zipCode",
+		a.order_no AS "orderNo",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a.return_type AS "returnType",
+		a.return_status AS "returnStatus",
+		a.apply_time AS "applyTime",
+		a.user_name AS "userName",
+		a.product_id AS "productId",
+		a.return_reson AS "returnReason",
+		a.return_sum AS "returnSum",
+		a.return_desc AS "retrunDesc",
+		a.order_type AS "orderType",
+		a.recommended_id AS "recommendedId"
+	</sql>
+
+	<sql id="orderTableReturnsJoins">
+	</sql>
+
+	<select id="get" resultType="OrderTableReturns">
+		SELECT
+		<include refid="orderTableReturnsColumns" />,
+		s.company_name as "companyName",
+		m.phone as "phone"
+		FROM order_table_returns a 
+		LEFT JOIN supplier s on a.supplier_id=s.id
+		LEFT JOIN order_table o on a.order_no=o.order_no 
+		LEFT JOIN mem_member m on o.member_no=m.id
+		WHERE a.id = #{id}
+	</select>
+
+	<select id="findList" resultType="OrderTableReturns">
+		SELECT
+			<include refid="orderTableReturnsColumns" />,
+			s.company_name as "companyName",
+			m.phone as "phone",
+			<!-- 退货记录未处理并且订单未完成 则此记录可编辑 -->
+			(CASE WHEN a.return_status = '3' AND ot.order_status &lt;&gt; 2
+				 THEN '0' ELSE '1'
+			END) as 'editFlag'
+		FROM order_table_returns a 
+		LEFT JOIN supplier s ON a.supplier_id=s.id
+		LEFT JOIN order_table ot ON a.order_no=ot.order_no
+		LEFT JOIN mem_member m ON ot.member_no = m.id
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} 
+			<if test="returnNo != null and returnNo != ''">
+				AND a.return_no = #{returnNo}
+			</if>
+			<if test="orderNo != null and orderNo != ''">
+				AND a.order_no = #{orderNo}
+			</if>
+			<if test="returnType !=0">
+				AND a.return_type=#{returnType}
+			</if>
+			<if test="applyBginTime != null and applyBginTime != '' and applyEndTime != null and applyEndTime != ''">
+				AND a.apply_time &gt;= #{applyBginTime} AND a.apply_time &lt;= #{applyEndTime}
+			</if>
+			<if test="applyBginTime != null and applyBginTime != ''">
+				AND a.apply_time &gt;= #{applyBginTime}
+			</if>
+			<if test="applyEndTime != null and applyEndTime != ''">
+				AND a.apply_time &lt;= #{applyEndTime}
+			</if>
+			<if test="returnStatus !=0">
+				AND a.return_status=#{returnStatus}
+			</if>
+			<if test="supplierId != null and supplierId != ''">
+				AND a.supplier_id = #{supplierId}
+			</if>
+			<if test="productId != null and productId != ''">
+				AND a.product_id=#{productId}
+			</if>
+			<if test="orderType != null and orderType != ''">
+				AND a.order_type=#{orderType}
+			</if>
+			<if test="recommendedId != null and recommendedId != '' and recommendedId != 'null' ">
+				AND a.recommended_id=#{recommendedId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="findAllList" resultType="OrderTableReturns">
+		SELECT
+		<include refid="orderTableReturnsColumns" />
+		FROM order_table_returns a
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO order_table_returns(
+		id,
+		return_no,
+		address,
+		area,
+		delivery_corp,
+		freight,
+		operator,
+		phone,
+		shipper,
+		shipping_method,
+		tracking_no,
+		zip_code,
+		order_no,
+		create_by,
+		create_date,
+		update_by,
+		update_date,
+		remarks,
+		del_flag
+		) VALUES (
+		#{id},
+		#{returnNo},
+		#{address},
+		#{area},
+		#{deliveryCorp},
+		#{freight},
+		#{operator},
+		#{phone},
+		#{shipper},
+		#{shippingMethod},
+		#{trackingNo},
+		#{zipCode},
+		#{orderNo},
+		#{createBy.id},
+		#{createDate},
+		#{updateBy.id},
+		#{updateDate},
+		#{remarks},
+		#{delFlag}
+		)
+	</insert>
+
+	<update id="update">
+		UPDATE order_table_returns SET
+		return_no =
+		#{returnNo},
+		address = #{address},
+		area = #{area},
+		delivery_corp =
+		#{deliveryCorp},
+		freight = #{freight},
+		operator = #{operator},
+		phone =
+		#{phone},
+		shipper = #{shipper},
+		shipping_method = #{shippingMethod},
+		tracking_no = #{trackingNo},
+		zip_code = #{zipCode},
+		order_no =
+		#{orderNo},
+		update_by = #{updateBy.id},
+		update_date = #{updateDate},
+		remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+
+	<update id="delete">
+		UPDATE order_table_returns SET
+		del_flag =
+		#{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	<update id="updateStatus">
+		UPDATE order_table_returns SET
+		return_status=#{returnStatus} WHERE id=#{id}
+	</update>
+	
+	<select id="queryOrderReturnBypId" resultType="com.uib.ecmanager.modules.order.entity.OrderTableReturns" parameterType="Map">
+	 select * from order_table_returns a where 1=1
+	 <if test="orderNo!=null and orderNo!=''">
+	   and a.order_no=#{orderNo}
+	  </if>
+	  <if test="productId!=null and productId!=''">
+	   and a.product_id=#{productId}
+	  </if>
+	  and a.del_flag='0'
+	</select>
+	
+	<update id="updateRecommendProductLog" parameterType="map">
+	    update recommend_product_log
+	    set is_settlement=#{isSettlement}
+	    where cartItem_id=#{cartItemId} and order_no=#{orderNo}
+	</update>
+	
+	<select id="selectOrderItemQuantity" parameterType="com.uib.ecmanager.modules.order.entity.OrderTableReturns" resultType="com.uib.ecmanager.modules.order.entity.OrderTableReturnsItem">
+	    select ri.quantity
+	    from order_table_returns r left join order_table_returns_item ri
+	    on r.id=ri.order_table_returns_id
+	    <where>
+	        <if test="productId!=null and productId!=''">
+	            and r.product_id=#{productId}
+	        </if>
+	        <if test="orderType!=null and orderType!=''">
+	            and r.order_type=#{orderType}
+	        </if>
+	        <if test="recommendedId!=null and recommendedId!='' and recommendedId!='null'">
+	            and r.recommended_id=#{recommendedId}
+	        </if>
+	         <if test="orderNo!=null and orderNo!=''">
+	            and r.order_no=#{orderNo}
+	        </if>
+	    </where>
+	</select>
+	
+	
+	<select id="countOrderReturnByOrderNo" parameterType="String" resultType="java.lang.Integer">
+		SELECT
+			count(1)
+		FROM
+			order_table_returns otr
+		WHERE
+			otr.order_no = #{orderNo}
+	</select>
+	
+	<select id="countOrderReturnSuccessByOrderNo" parameterType="String" resultType="java.lang.Integer">
+		SELECT
+			count(1)
+		FROM
+			order_table_returns otr
+		WHERE otr.order_no = #{orderNo}
+		  AND otr.return_status = '1'
+	</select>
+</mapper>

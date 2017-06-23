@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uib.ecmanager.modules.mem.dao.RecommenderLogDao">
+    <resultMap id="recommenderLog_parent_returns" type="com.uib.ecmanager.modules.mem.entity.RecommenderLog">
+   		<id column="id" property="id"/>
+   		<result column="productId" property="productId"/>
+   		<result column="parentIds" property="parentIds"/>
+   		<result column="parent.id" property="parentId"/>
+   		<result column="memberId" property="memberId"/>
+   		<result column="memberStatusCode" property="memberStatusCode"/>
+   		<result column="memberStatusName" property="memberStatusName"/>
+   		<result column="createTime" property="createTime"/>
+   		<result column="updateTime" property="updateTime"/>
+   		<association property="parent" javaType="com.uib.ecmanager.modules.mem.entity.RecommenderLog">
+   			<id column="parentId" property="id"/>
+	   		<result column="productId" property="productId"/>
+	   		<result column="parentIds" property="parentIds"/>
+	   		<result column="memberId" property="memberId"/>
+	   		<result column="memberStatusCode" property="memberStatusCode"/>
+	   		<result column="memberStatusName" property="memberStatusName"/>
+   		</association>
+    </resultMap>
+    
+	<sql id="recommenderLogColumns">
+		a.id AS "id",
+		a.product_id AS "productId",
+		a.parent_id AS "parent.id",
+		a.parent_ids AS "parentIds",
+		a.member_id AS "memberId",
+		a.member_status_code AS "memberStatusCode",
+		a.member_status_name AS "memberStatusName",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime"
+	</sql>
+	
+	<sql id="recommenderLogJoins">
+		left join recommender_log r on a.parent_id = r.id
+	</sql>
+    
+	<select id="get" resultType="RecommenderLog">
+		SELECT 
+			<include refid="recommenderLogColumns"/>
+		FROM recommender_log a
+		<include refid="recommenderLogJoins"/>
+		WHERE a.member_id = #{memberId} and a.product_id = #{productId}
+	</select>
+	
+	<select id="getByMemProId" resultType="RecommenderLog">
+		SELECT 
+			<include refid="recommenderLogColumns"/>
+		FROM recommender_log a
+		<include refid="recommenderLogJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList"  resultMap="recommenderLog_parent_returns">
+		SELECT 
+		a.id AS "id",
+		a.product_id AS "productId",
+		CONCAT(a.parent_id,'-',a.product_id) AS "parent.id",
+		a.parent_ids AS "parentIds",
+		CONCAT(a.member_id,'-',a.product_id) AS "memberId",
+		a.member_status_code AS "memberStatusCode",
+		a.member_status_name AS "memberStatusName",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime",
+		r.id as "parentId"
+		FROM recommender_log a
+		<include refid="recommenderLogJoins"/>
+		<where>
+		<if test="memberId != null and memberId != ''">
+			AND  a.parent_ids like  CONCAT('%',#{memberId},'%')
+		</if>
+		<if test="productId != null and productId != ''">
+			AND  a.product_id = #{productId}
+		</if>
+		<if test="parentIds != null and parentIds != ''">
+			AND a.parent_ids LIKE CONCAT('%',#{parentIds},'%') 
+		</if>
+		<if test="createTime !=null and createTime !=''">
+			AND a.create_time &gt;= #{createTime}
+		</if>
+		<if test="updateTime !=null and updateTime !=''">
+			AND a.create_time &lt;= #{updateTime}
+		</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="RecommenderLog">
+		SELECT 
+			<include refid="recommenderLogColumns"/>
+		FROM recommender_log a
+		<include refid="recommenderLogJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO recommender_log(
+			id,
+			product_id,
+			parent_id,
+			parent_ids,
+			member_id,
+			member_status_code,
+			member_status_name,
+			create_time,
+			update_time
+		) VALUES (
+			#{id},
+			#{productId},
+			#{parent.id},
+			#{parentIds},
+			#{memberId},
+			#{memberStatusCode},
+			#{memberStatusName},
+			#{createTime},
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE recommender_log SET 	
+			product_id = #{productId},
+			parent_id = #{parent.id},
+			parent_ids = #{parentIds},
+			member_id = #{memberId},
+			member_status_code = #{memberStatusCode},
+			member_status_name = #{memberStatusName},
+			create_time = #{createTime},
+			update_time = #{updateTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM recommender_log
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

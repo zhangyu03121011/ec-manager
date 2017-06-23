@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.uib.ecmanager.modules.mem.dao.PrizeRecommenderDao">
+    <resultMap type="PrizeRecommender" id="prizeRecommender_prize_activity">
+	    <id property="id" column="id"/>
+	    <result property="prizeStatus" column="prizeStatus"/>
+	    <result property="startTime" column="startTime"/>
+	    <result property="endTime" column="endTime"/>
+	    <result property="delFlag" column="delFlag"/>
+	    <association property="prizeActivity" javaType="com.uib.ecmanager.modules.prize.entity.PrizeActivity">
+	    	<id property="id" column="id"/>
+	    	<result property="name" column="name"/>
+	    	<result property="point" column="point"/>
+	    	<result property="limits" column="limits"/>
+	    </association>
+	     <association property="prizeItemActivity" javaType="com.uib.ecmanager.modules.prize.entity.PrizeItemActivity">
+	    	<id property="id" column="iId"/>
+	    	<result property="awardNumber" column="awardNumber"/>
+	    	<result property="awardId" column="awardId"/>
+	    	<result property="isVirtual" column="isVirtual"/>
+	    	<result property="number" column="number"/>
+	    	<result property="prizeNumber" column="prizeNumber"/>
+	    </association>
+	    <association property="member" javaType="com.uib.ecmanager.modules.mem.entity.MemMember">
+	    	<id property="id" column="mem.id"/>
+	    	<result property="username" column="userName"/>
+	    </association>
+    </resultMap>
+    
+	<sql id="prizeRecommenderColumns">
+		a.id AS "id",
+		a.prize_activity_id AS "prizeActivityId",
+		a.prize_item_activity_id AS "prizeItemActivityId",
+		a.member_id AS "memberId",
+		a.prize_status AS "prizeStatus",
+		a.del_flag AS "delFlag",
+		a.start_time AS "startTime",
+		a.end_time AS "endTime",
+		a.create_time AS "createTime",
+		a.update_time AS "updateTime",
+	    p.name as "name",
+	    p.point as "point",
+	    p.limits as "limits",
+        i.award_number as "awardNumber",
+        i.award_id as "awardId",
+        i.is_virtual as "isVirtual",
+        i.number as "number",
+        i.prize_number as "prizeNumber",
+        m.username as "userName",
+        m.id as "mem.id"
+	</sql>
+	
+	<sql id="prizeRecommenderJoins">
+	left join prize_activity p on  a.prize_activity_id = p.id
+	left join prize_item_activity i on a.prize_item_activity_id = i.id
+	left join mem_member m on a.member_id = m.id 
+	</sql>
+    
+	<select id="get" resultType="PrizeRecommender">
+		SELECT 
+			<include refid="prizeRecommenderColumns"/>
+		FROM prize_recommender a
+		<include refid="prizeRecommenderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultMap="prizeRecommender_prize_activity">
+		SELECT 
+			<include refid="prizeRecommenderColumns"/>
+		FROM prize_recommender a
+		<include refid="prizeRecommenderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="memMemberName != null and memMemberName != ''">
+				and a.member_id = #{member.id}
+			</if>
+			<if test="startTime != null and startTime != ''">
+				AND a.create_time &gt;= #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				AND a.create_time &lt;= #{endTime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="PrizeRecommender">
+		SELECT 
+			<include refid="prizeRecommenderColumns"/>
+		FROM prize_recommender a
+		<include refid="prizeRecommenderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO prize_recommender(
+			id,
+			prize_activity_id,
+			prize_item_activity_id,
+			member_id,
+			prize_status,
+			del_flag,
+			start_time,
+			end_time,
+			create_time,
+			update_time
+		) VALUES (
+			#{id},
+			#{prizeActivityId},
+			#{prizeItemActivityId},
+			#{memberId},
+			#{prizeStatus},
+			#{delFlag},
+			#{startTime},
+			#{endTime},
+			now(),
+			#{updateTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE prize_recommender SET 	
+			prize_activity_id = #{prizeActivityId},
+			prize_item_activity_id = #{prizeItemActivityId},
+			member_id = #{memberId},
+			prize_status = #{prizeStatus},
+			start_time = #{startTime},
+			end_time = #{endTime},
+			create_time = #{createTime},
+			update_time = #{updateTime}
+		WHERE id = #{id}
+	</update>
+	
+	<select id="queryPrizeStatus" resultMap="prizeRecommender_prize_activity">
+		select
+		a.id AS "id",
+		a.prize_activity_id AS "prizeActivityId",
+		a.prize_item_activity_id AS "prizeItemActivityId",
+		a.member_id AS "memberId",
+		a.prize_status AS "prizeStatus",
+		a.start_time AS "startTime",
+		a.end_time AS "endTime",
+		i.id as "iId", 
+        i.award_number as "awardNumber",
+        i.award_id as "awardId",
+        i.is_virtual as "isVirtual",
+        i.number as "number",
+        i.prize_number as "prizeNumber"
+        from prize_recommender a
+        left join prize_item_activity i on a.prize_item_activity_id = i.id 
+        where a.prize_status = '0'
+	</select>
+	
+	<update id="batchUpdateStatus">
+		UPDATE prize_recommender SET
+		prize_status = '2'
+		where id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE prize_recommender SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
