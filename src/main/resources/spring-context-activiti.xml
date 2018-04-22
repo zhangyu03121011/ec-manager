@@ -30,8 +30,8 @@
         <!-- 自定义用户权限 -->
         <property name="customSessionFactories"> 
             <list>
-				<bean class="com.uib.ecmanager.modules.act.service.ext.ActUserEntityServiceFactory"/>
-				<bean class="com.uib.ecmanager.modules.act.service.ext.ActGroupEntityServiceFactory"/>
+				<bean class="com.common.ecmanager.modules.act.service.ext.ActUserEntityServiceFactory"/>
+				<bean class="com.common.ecmanager.modules.act.service.ext.ActGroupEntityServiceFactory"/>
             </list>
     	</property>
         

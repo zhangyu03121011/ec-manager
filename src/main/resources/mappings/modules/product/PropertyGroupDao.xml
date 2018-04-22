@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.uib.ecmanager.modules.product.dao.PropertyGroupDao">
+<mapper namespace="com.common.ecmanager.modules.product.dao.PropertyGroupDao">
 
 	<sql id="propertyGroupColumns">
 		a.id AS "id",
@@ -268,7 +268,7 @@
 		<result property="productCategoryId" column="productCategoryId"/>
 		<result property="selected" column="selected"/>
 		<collection property="productPropertyList" javaType="ArrayList" 
-			ofType="com.uib.ecmanager.modules.product.entity.ProductProperty">
+			ofType="com.common.ecmanager.modules.product.entity.ProductProperty">
 			<id property="id" column="pId"/>
 			<result property="name" column="pName"/>
 			<result property="orders" column="pOrders"/>

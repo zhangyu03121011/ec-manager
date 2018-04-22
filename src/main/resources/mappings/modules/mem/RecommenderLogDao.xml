@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.uib.ecmanager.modules.mem.dao.RecommenderLogDao">
-    <resultMap id="recommenderLog_parent_returns" type="com.uib.ecmanager.modules.mem.entity.RecommenderLog">
+<mapper namespace="com.common.ecmanager.modules.mem.dao.RecommenderLogDao">
+    <resultMap id="recommenderLog_parent_returns" type="com.common.ecmanager.modules.mem.entity.RecommenderLog">
    		<id column="id" property="id"/>
    		<result column="productId" property="productId"/>
    		<result column="parentIds" property="parentIds"/>
@@ -11,7 +11,7 @@
    		<result column="memberStatusName" property="memberStatusName"/>
    		<result column="createTime" property="createTime"/>
    		<result column="updateTime" property="updateTime"/>
-   		<association property="parent" javaType="com.uib.ecmanager.modules.mem.entity.RecommenderLog">
+   		<association property="parent" javaType="com.common.ecmanager.modules.mem.entity.RecommenderLog">
    			<id column="parentId" property="id"/>
 	   		<result column="productId" property="productId"/>
 	   		<result column="parentIds" property="parentIds"/>

@@ -9,8 +9,8 @@
  */
 package ${packageName}.${moduleName}.dao<#if subModuleName != "">.${subModuleName}</#if>;
 
-import com.uib.ecmanager.common.persistence.CrudDao;
-import com.uib.ecmanager.common.persistence.annotation.MyBatisDao;
+import com.common.ecmanager.common.persistence.CrudDao;
+import com.common.ecmanager.common.persistence.annotation.MyBatisDao;
 import ${packageName}.${moduleName}.entity<#if subModuleName != "">.${subModuleName}</#if>.${ClassName};
 
 /**

@@ -11,7 +11,7 @@
 		<param-value>classpath*:/spring-context*.xml</param-value>
 	</context-param>
 	<listener>
-		<listener-class>com.uib.ecmanager.modules.sys.listener.WebContextListener</listener-class>
+		<listener-class>com.common.ecmanager.modules.sys.listener.WebContextListener</listener-class>
 	</listener>
 	<listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>  
@@ -50,7 +50,7 @@
 	<!-- PageCache, cache .html suffix.
 	<filter>
 		<filter-name>PageCacheFilter</filter-name>
-		<filter-class>com.uib.ecmanager.common.filter.PageCachingFilter</filter-class>
+		<filter-class>com.common.ecmanager.common.filter.PageCachingFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>PageCacheFilter</filter-name>
@@ -96,7 +96,7 @@
 		<servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
 		<init-param>
 			<param-name>org.restlet.application</param-name>
-			<param-value>com.uib.ecmanager.modules.act.rest.ActRestApplication</param-value>
+			<param-value>com.common.ecmanager.modules.act.rest.ActRestApplication</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -121,7 +121,7 @@
 	<!-- CKFinder -->
 	<servlet>
 		<servlet-name>CKFinderConnectorServlet</servlet-name>
-		<servlet-class>com.uib.ecmanager.common.web.CKFinderConnectorServlet</servlet-class>
+		<servlet-class>com.common.ecmanager.common.web.CKFinderConnectorServlet</servlet-class>
 		<init-param>
 			<param-name>XMLConfig</param-name>
 			<param-value>/WEB-INF/ckfinder.xml</param-value>
@@ -132,7 +132,7 @@
 		</init-param>
 		<init-param>
 			<param-name>configuration</param-name>
-			<param-value>com.uib.ecmanager.common.web.CKFinderConfig</param-value>
+			<param-value>com.common.ecmanager.common.web.CKFinderConfig</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -160,7 +160,7 @@
 	<!-- Userfiles download -->
 	<servlet>
 	  	<servlet-name>UserfilesDownloadServlet</servlet-name>
-	  	<servlet-class>com.uib.ecmanager.common.servlet.UserfilesDownloadServlet</servlet-class>
+	  	<servlet-class>com.common.ecmanager.common.servlet.UserfilesDownloadServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 	  	<servlet-name>UserfilesDownloadServlet</servlet-name>
@@ -170,7 +170,7 @@
 	<!-- Validate code -->
 	<servlet>
 		<servlet-name>ValidateCodeServlet</servlet-name>
-		<servlet-class>com.uib.ecmanager.common.servlet.ValidateCodeServlet</servlet-class>
+		<servlet-class>com.common.ecmanager.common.servlet.ValidateCodeServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ValidateCodeServlet</servlet-name>
@@ -180,7 +180,7 @@
 	<!-- KindEditorUploadServlet -->
 	<servlet>
 		<servlet-name>KindEditorUploadServlet</servlet-name>
-		<servlet-class>com.uib.ecmanager.common.servlet.KindEditorUploadServlet</servlet-class>
+		<servlet-class>com.common.ecmanager.common.servlet.KindEditorUploadServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>KindEditorUploadServlet</servlet-name>

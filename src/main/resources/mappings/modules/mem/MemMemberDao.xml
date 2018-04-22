@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.uib.ecmanager.modules.mem.dao.MemMemberDao">
+<mapper namespace="com.common.ecmanager.modules.mem.dao.MemMemberDao">
     
 	<sql id="memMemberColumns">
 		a.id AS "id",
@@ -379,7 +379,7 @@
 		<id property="userType" column="userType" />
 		<id property="commission" column="commission" />
 	    <id property="sumamount" column="sumamount" />
-	    <association property="memRank" javaType="com.uib.ecmanager.modules.mem.entity.MemRank">
+	    <association property="memRank" javaType="com.common.ecmanager.modules.mem.entity.MemRank">
 	        <id column="bid" property="id"/>
 	        <result column="bname" property="name"/>
 	        <result column="bamount" property="amount"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.uib.ecmanager.modules.mem.dao.UserComplaintDao">
+<mapper namespace="com.common.ecmanager.modules.mem.dao.UserComplaintDao">
     
     <sql id="userComplaintColumns2">
 		a.id AS "id",
@@ -162,7 +162,7 @@
 		<id property="reply" column="reply" />
 		<id property="username" column="username" />			
 		<collection property="userComplaintAttachmentList" javaType="ArrayList"
-			ofType="com.uib.ecmanager.modules.mem.entity.UserComplaintAttachment">
+			ofType="com.common.ecmanager.modules.mem.entity.UserComplaintAttachment">
 			<id property="id" column="cId" />
 			<result property="fileName" column="fileName" />
 			<result property="filePath" column="filePath" />

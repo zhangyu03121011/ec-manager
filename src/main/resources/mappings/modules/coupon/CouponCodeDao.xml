@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.uib.ecmanager.modules.coupon.dao.CouponCodeDao">
-    <resultMap id="couponCode_memMember" type="com.uib.ecmanager.modules.coupon.entity.CouponCode">
+<mapper namespace="com.common.ecmanager.modules.coupon.dao.CouponCodeDao">
+    <resultMap id="couponCode_memMember" type="com.common.ecmanager.modules.coupon.entity.CouponCode">
     	<id property="id" column="id"/>
     	<result property="code" column="code"/>
     	<result property="isUsed" column="isUsed"/>
@@ -10,11 +10,11 @@
     	<result property="delFlag" column="delFlag"/>
     	<result property="updateDate" column="updateDate"/>
     	<result property="createDate" column="createDate"/>
-    	<association property="memMember" javaType="com.uib.ecmanager.modules.mem.entity.MemMember">
+    	<association property="memMember" javaType="com.common.ecmanager.modules.mem.entity.MemMember">
     		<id property="id" column="memMember.id"/>
     		<result property="username" column="memMember.username"/>
     	</association>
-    	<association property="coupon" javaType="com.uib.ecmanager.modules.coupon.entity.Coupon">
+    	<association property="coupon" javaType="com.common.ecmanager.modules.coupon.entity.Coupon">
     		<id property="id" column="coupon.id"/>
     		<result property="name" column="coupon.name"/>
     	</association>

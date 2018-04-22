@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.uib.ecmanager.modules.product.dao.ProductDao">
+<mapper namespace="com.common.ecmanager.modules.product.dao.ProductDao">
 
 	<sql id="productColumns">
 		a.id AS "id",
@@ -633,7 +633,7 @@
 		<id property="id" column="id" />
 		
 		<!-- 与商品价格表关联 -->
-		<collection property="productPriceRefList" javaType="ArrayList" ofType="com.uib.ecmanager.modules.product.entity.ProductPriceRef">
+		<collection property="productPriceRefList" javaType="ArrayList" ofType="com.common.ecmanager.modules.product.entity.ProductPriceRef">
 			<id column="fid" property="id"/>
 	        <result column="productId" property="productId"/>
 	        <result column="sellPrice" property="sellPrice"/>
@@ -642,7 +642,7 @@
 		</collection>
 				    		
 		<collection property="productSpecificationRefs" javaType="ArrayList"
-			ofType="com.uib.ecmanager.modules.product.entity.ProductSpecificationRef">
+			ofType="com.common.ecmanager.modules.product.entity.ProductSpecificationRef">
 			<id property="id" column="bId" />
 			<result property="specificationId" column="specificationId" />
 			<result property="productId" column="productId" />
@@ -655,7 +655,7 @@
 	    and p.wx_is_marketable='1' and s.id=#{supplierId}
 	</select>	
 	
-	<select id="queryReMember" parameterType="Map" resultType="com.uib.ecmanager.modules.order.entity.OrderTableItem">
+	<select id="queryReMember" parameterType="Map" resultType="com.common.ecmanager.modules.order.entity.OrderTableItem">
 	    select m.id AS 'reMemberIdString',
 	           m.username AS 'reMemberName',
 	           m.phone AS 'reMemberPhone' from 

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" import="com.uib.ecmanager.common.enums.*"%>
+<%@ page contentType="text/html;charset=UTF-8" import="com.common.ecmanager.common.enums.*"%>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>

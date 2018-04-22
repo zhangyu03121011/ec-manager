@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
-	namespace="com.uib.ecmanager.modules.product.dao.SpecificationGroupDao">
+	namespace="com.common.ecmanager.modules.product.dao.SpecificationGroupDao">
 
 	<sql id="specificationGroupColumns">
 		a.id AS "id",
@@ -275,7 +275,7 @@
 		<result property="remarks" column="remarks" />
 		<result property="delFlag" column="delFlag" />
 		<collection property="productSpecificationList" javaType="ArrayList"
-			ofType="com.uib.ecmanager.modules.product.entity.ProductSpecification">
+			ofType="com.common.ecmanager.modules.product.entity.ProductSpecification">
 			<id property="id" column="bId"/>
 			<result property="specificationNo" column="bSpecificationNo"/>
 			<result property="orders" column="bOrders"/>

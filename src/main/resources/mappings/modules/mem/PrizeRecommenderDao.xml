@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.uib.ecmanager.modules.mem.dao.PrizeRecommenderDao">
+<mapper namespace="com.common.ecmanager.modules.mem.dao.PrizeRecommenderDao">
     <resultMap type="PrizeRecommender" id="prizeRecommender_prize_activity">
 	    <id property="id" column="id"/>
 	    <result property="prizeStatus" column="prizeStatus"/>
 	    <result property="startTime" column="startTime"/>
 	    <result property="endTime" column="endTime"/>
 	    <result property="delFlag" column="delFlag"/>
-	    <association property="prizeActivity" javaType="com.uib.ecmanager.modules.prize.entity.PrizeActivity">
+	    <association property="prizeActivity" javaType="com.common.ecmanager.modules.prize.entity.PrizeActivity">
 	    	<id property="id" column="id"/>
 	    	<result property="name" column="name"/>
 	    	<result property="point" column="point"/>
 	    	<result property="limits" column="limits"/>
 	    </association>
-	     <association property="prizeItemActivity" javaType="com.uib.ecmanager.modules.prize.entity.PrizeItemActivity">
+	     <association property="prizeItemActivity" javaType="com.common.ecmanager.modules.prize.entity.PrizeItemActivity">
 	    	<id property="id" column="iId"/>
 	    	<result property="awardNumber" column="awardNumber"/>
 	    	<result property="awardId" column="awardId"/>
@@ -21,7 +21,7 @@
 	    	<result property="number" column="number"/>
 	    	<result property="prizeNumber" column="prizeNumber"/>
 	    </association>
-	    <association property="member" javaType="com.uib.ecmanager.modules.mem.entity.MemMember">
+	    <association property="member" javaType="com.common.ecmanager.modules.mem.entity.MemMember">
 	    	<id property="id" column="mem.id"/>
 	    	<result property="username" column="userName"/>
 	    </association>

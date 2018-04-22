@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.uib.ecmanager.modules.order.dao.OrderTableReturnsDao">
+<mapper namespace="com.common.ecmanager.modules.order.dao.OrderTableReturnsDao">
 
 	<sql id="orderTableReturnsColumns">
 		a.id AS "id",
@@ -203,7 +203,7 @@
 		return_status=#{returnStatus} WHERE id=#{id}
 	</update>
 	
-	<select id="queryOrderReturnBypId" resultType="com.uib.ecmanager.modules.order.entity.OrderTableReturns" parameterType="Map">
+	<select id="queryOrderReturnBypId" resultType="com.common.ecmanager.modules.order.entity.OrderTableReturns" parameterType="Map">
 	 select * from order_table_returns a where 1=1
 	 <if test="orderNo!=null and orderNo!=''">
 	   and a.order_no=#{orderNo}
@@ -220,7 +220,7 @@
 	    where cartItem_id=#{cartItemId} and order_no=#{orderNo}
 	</update>
 	
-	<select id="selectOrderItemQuantity" parameterType="com.uib.ecmanager.modules.order.entity.OrderTableReturns" resultType="com.uib.ecmanager.modules.order.entity.OrderTableReturnsItem">
+	<select id="selectOrderItemQuantity" parameterType="com.common.ecmanager.modules.order.entity.OrderTableReturns" resultType="com.common.ecmanager.modules.order.entity.OrderTableReturnsItem">
 	    select ri.quantity
 	    from order_table_returns r left join order_table_returns_item ri
 	    on r.id=ri.order_table_returns_id

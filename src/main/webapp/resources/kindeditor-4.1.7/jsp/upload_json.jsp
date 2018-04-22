@@ -5,7 +5,7 @@
 <%@ page import="org.apache.commons.fileupload.disk.*" %>
 <%@ page import="org.apache.commons.fileupload.servlet.*" %>
 <%@ page import="org.json.simple.*" %>
-<%@ page import="com.uib.ecmanager.common.config.Global" %>
+<%@ page import="com.common.ecmanager.common.config.Global" %>
 <%
 
 /**

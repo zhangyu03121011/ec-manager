@@ -1,0 +1,160 @@
+/**
+ * Copyright &copy; 2012-2014 <a href="https://github.com/thinkgem/uib_ec">uib_ec</a> All rights reserved.
+ */
+package com.common.ecmanager.modules.product.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.common.ecmanager.common.mapper.JsonMapper;
+import com.common.ecmanager.common.persistence.Page;
+import com.common.ecmanager.common.service.CrudService;
+import com.common.ecmanager.common.utils.StringUtils;
+import com.common.ecmanager.modules.product.dao.ProductPropertyDao;
+import com.common.ecmanager.modules.product.dao.PropertyGroupDao;
+import com.common.ecmanager.modules.product.entity.ProductProperty;
+import com.common.ecmanager.modules.product.entity.PropertyGroup;
+import com.common.util.UUIDGenerator;
+
+/**
+ * 商品属性Service
+ * 
+ * @author gaven
+ * @version 2015-06-04
+ */
+@Service
+@Transactional(readOnly = true)
+public class PropertyGroupService extends CrudService<PropertyGroupDao, PropertyGroup> {
+
+	@Autowired
+	private ProductPropertyDao productPropertyDao;
+	@Autowired
+	private PropertyGroupDao propertyGroupDao;
+
+	public PropertyGroup get(String id) {
+		PropertyGroup propertyGroup = super.get(id);
+		propertyGroup.setProductPropertyList(productPropertyDao.findList(new ProductProperty(propertyGroup)));
+		return propertyGroup;
+	}
+
+	public List<PropertyGroup> findList(PropertyGroup propertyGroup) {
+		List<PropertyGroup> list = super.findList(propertyGroup);
+		for (PropertyGroup group : list) {
+			group.setProductPropertyList(get(group.getId()).getProductPropertyList());
+		}
+		return list;
+	}
+
+	public List<PropertyGroup> findPropertyGroupsByParentCategoryId(String categoryId,String parentId,Boolean attachDetail) {
+		List<PropertyGroup> list = dao.queryParentAddPropertyGroups(categoryId,parentId);
+//		if(Boolean.TRUE.equals(attachDetail)){
+//			for (PropertyGroup group : list) {
+//				group.setProductPropertyList(get(group.getId()).getProductPropertyList());
+//			}
+//		}
+		System.out.println(JsonMapper.toJsonString(list));
+		return list;
+	}
+	
+	public List<PropertyGroup> findPropertyGroupsByCategoryId(String categoryId,Boolean attachDetail){
+		List<PropertyGroup> list = dao.queryPropertyGroupsByCategoryId(categoryId);
+//		if(Boolean.TRUE.equals(attachDetail)){
+//			for (PropertyGroup group : list) {
+//				group.setProductPropertyList(get(group.getId()).getProductPropertyList());
+//			}
+//		}
+		return list;
+	}
+
+	public Page<PropertyGroup> findPage(Page<PropertyGroup> page, PropertyGroup propertyGroup) {
+		return super.findPage(page, propertyGroup);
+	}
+
+	@Transactional(readOnly = false)
+	public void save(PropertyGroup propertyGroup) {
+		super.save(propertyGroup);
+		for (ProductProperty productProperty : propertyGroup.getProductPropertyList()) {
+			if (productProperty.getId() == null) {
+				continue;
+			}
+			if (ProductProperty.DEL_FLAG_NORMAL.equals(productProperty.getDelFlag())) {
+				if (StringUtils.isBlank(productProperty.getId())) {
+					productProperty.setMerchantNo(propertyGroup.getMerchantNo());
+					productProperty.setPropertyGroup(propertyGroup);
+					productProperty.preInsert();
+					productPropertyDao.insert(productProperty);
+				}
+			} else {
+				productPropertyDao.delete(productProperty);
+			}
+		}
+	}
+
+	@Transactional(readOnly = false)
+	public void update(PropertyGroup propertyGroup) {
+		super.update(propertyGroup);
+		for (ProductProperty productProperty : propertyGroup.getProductPropertyList()) {
+			if (productProperty.getMerchantNo() == null) {
+				productProperty.setMerchantNo(propertyGroup.getMerchantNo());
+			}
+			if (StringUtils.isBlank(productProperty.getId())) {
+				productProperty.setId(UUIDGenerator.getUUID());
+				productProperty.setPropertyGroup(propertyGroup);
+				productProperty.preInsert();
+				productPropertyDao.insert(productProperty);
+				continue;
+			}
+			if (ProductProperty.DEL_FLAG_NORMAL.equals(productProperty.getDelFlag())) {
+
+				productProperty.preUpdate();
+				productPropertyDao.update(productProperty);
+
+			} else {
+				productPropertyDao.delete(productProperty);
+			}
+		}
+	}
+
+	@Transactional(readOnly = false)
+	public void delete(PropertyGroup propertyGroup) {
+		super.delete(propertyGroup);
+		productPropertyDao.delete(new ProductProperty(propertyGroup));
+	}
+	
+	
+	/*
+	 * 根据参数组查商品ID
+	 * 
+	 */
+	public List<String> queryProductIdByPropertyGroup(PropertyGroup propertyGroup){
+		List<String> ids = new ArrayList<String>();
+		if(StringUtils.isBlank(propertyGroup.getId())){
+			return null;
+		}else{
+			ids = propertyGroupDao.queryProductIdByPropertyGroup(propertyGroup);
+		}
+		return ids;
+	}
+	
+	/**
+	 * 根据商品ID查询商品是否上架
+	 * @param id
+	 * @return
+	 */
+	public String queryProductIsMarketable(String id){
+		String result = "";
+		if(StringUtils.isBlank(id)){
+			return null;
+		}else{
+			result = propertyGroupDao.queryProductIsMarketable(id);
+		}
+		return result;
+		
+	}
+	
+
+}

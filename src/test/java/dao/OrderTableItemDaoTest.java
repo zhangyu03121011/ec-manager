@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import base.BaseTest;
 
-import com.uib.ecmanager.modules.order.dao.OrderTableItemDao;
+import com.common.ecmanager.modules.order.dao.OrderTableItemDao;
 
 public class OrderTableItemDaoTest extends BaseTest {
 	

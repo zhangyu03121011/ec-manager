@@ -13,7 +13,7 @@ package ${packageName}.${moduleName}.entity<#if subModuleName != "">.${subModule
 import ${i};
 </#list>
 
-import com.uib.ecmanager.common.persistence.TreeEntity;
+import com.common.ecmanager.common.persistence.TreeEntity;
 
 /**
  * ${functionName}Entity

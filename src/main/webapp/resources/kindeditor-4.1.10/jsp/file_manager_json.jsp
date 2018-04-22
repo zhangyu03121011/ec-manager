@@ -2,7 +2,7 @@
 <%@ page import="java.util.*,java.io.*" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="org.json.simple.*" %>
-<%@ page import="com.uib.ecmanager.common.config.Global" %>
+<%@ page import="com.common.ecmanager.common.config.Global" %>
 <%
 
 /**

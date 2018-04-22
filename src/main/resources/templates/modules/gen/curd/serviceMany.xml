@@ -15,9 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.uib.ecmanager.common.persistence.Page;
-import com.uib.ecmanager.common.service.CrudService;
-import com.uib.ecmanager.common.utils.StringUtils;
+import com.common.ecmanager.common.persistence.Page;
+import com.common.ecmanager.common.service.CrudService;
+import com.common.ecmanager.common.utils.StringUtils;
 import ${packageName}.${moduleName}.entity<#if subModuleName != "">.${subModuleName}</#if>.${ClassName};
 import ${packageName}.${moduleName}.dao<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}Dao;
 <#list table.childList as c>

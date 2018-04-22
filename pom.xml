@@ -556,7 +556,7 @@
 		
 		<!-- 自定义jar依赖包
 		<dependency>
-			<groupId>com.uib.ecmanager</groupId>
+			<groupId>com.common.ecmanager</groupId>
 			<artifactId>test-core</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
