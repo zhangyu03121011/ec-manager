@@ -15,7 +15,7 @@
 	<description>Spring Configuration</description>
 	
 	<!-- 加载dubbo配置 -->
- 	<import resource="classpath:dubboConsumer.xml" /> 
+<!--  	<import resource="classpath:dubboConsumer.xml" />  -->
  	
     <!-- 加载配置属性文件 -->
 	<context:property-placeholder ignore-unresolvable="true" location="classpath:sys.properties" />

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.uib.common.utils.UUIDGenerator;
+import com.common.util.UUIDGenerator;
 import com.uib.ecmanager.common.persistence.Page;
 import com.uib.ecmanager.common.service.CrudService;
 import com.uib.ecmanager.common.utils.StringUtils;

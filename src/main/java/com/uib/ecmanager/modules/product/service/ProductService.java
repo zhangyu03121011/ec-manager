@@ -14,13 +14,13 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.uib.common.utils.UUIDGenerator;
+import com.common.util.UUIDGenerator;
 import com.uib.ecmanager.common.persistence.Page;
 import com.uib.ecmanager.common.service.CrudService;
 import com.uib.ecmanager.common.utils.StringUtils;

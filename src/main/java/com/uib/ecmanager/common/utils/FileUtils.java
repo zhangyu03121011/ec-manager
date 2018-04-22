@@ -388,7 +388,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 */
 	public static void writeToFile(String fileName, String content, boolean append) {
 		try {
-			FileUtils.write(new File(fileName), content, "utf-8", append);
+			FileUtils.write(new File(fileName), content, "utf-8");
 			log.debug("文件 " + fileName + " 写入成功!");
 		} catch (IOException e) {
 			log.debug("文件 " + fileName + " 写入失败! " + e.getMessage());
@@ -401,7 +401,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 	 */
 	public static void writeToFile(String fileName, String content, String encoding, boolean append) {
 		try {
-			FileUtils.write(new File(fileName), content, encoding, append);
+			FileUtils.write(new File(fileName), content, encoding);
 			log.debug("文件 " + fileName + " 写入成功!");
 		} catch (IOException e) {
 			log.debug("文件 " + fileName + " 写入失败! " + e.getMessage());

@@ -16,7 +16,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,13 +26,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.common.util.BeanUtilsEx;
+import com.common.util.UUIDGenerator;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
-import com.uib.common.utils.UUIDGenerator;
 import com.uib.ecmanager.common.config.Global;
 import com.uib.ecmanager.common.persistence.Page;
 import com.uib.ecmanager.common.utils.StringUtils;
@@ -349,7 +349,7 @@ public class ProductController extends BaseController {
 			boolean firstFlag = false;
 			for (SpecificationGroup group : groups) {
 				String ids = request.getParameter("specificationGroup_" + group.getId());
-				if (StringUtils.isNoneBlank(ids)) {
+				if (StringUtils.isNotBlank(ids)) {
 					String[] idArr = ids.split(",");
 					for (int i = 0; i < idArr.length; i++) {
 						
@@ -392,12 +392,14 @@ public class ProductController extends BaseController {
 			if (Utils.isNotBlank(specificationGroupIds)) {
 				groupIds = Arrays.asList(specificationGroupIds.split(","));
 			}
+			//org.apache.commons.beanutils.ConversionException: No value specified for 'Date' date字段为空时异常
+//			ConvertUtils.register(new DateConverter(null), java.util.Date.class);
 			List<String> productIds = new ArrayList<String>();
 			int count =0;
 			for (List<String> list : idsList) {
 				count+=5;
 				Product product_ = new Product();
-				BeanUtils.copyProperties(product_, product);
+				BeanUtilsEx.copyProperties(product_, product);
 				product_.setId(UUIDGenerator.getUUID());
 				product_.setProductSpecificationIds(list);
 				//添加商品价格				
@@ -488,7 +490,7 @@ public class ProductController extends BaseController {
 			boolean firstFlag = false;
 			for (SpecificationGroup group : groups) {
 				String ids = request.getParameter("specificationGroup_" + group.getId());
-				if (StringUtils.isNoneBlank(ids)) {
+				if (StringUtils.isNotBlank(ids)) {
 					String[] idArr = ids.split(",");
 					for (int i = 0; i < idArr.length; i++) {
 						

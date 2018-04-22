@@ -3,7 +3,7 @@ package com.uib.ecmanager.common.utils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.uib.common.utils.RandomUtil;
+import com.common.util.RandomUtil;
 
 
 public class OrderNoGenerateUtil {

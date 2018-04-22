@@ -11,9 +11,9 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.common.util.StringUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Lists;
-import com.uib.common.utils.StringUtil;
 import com.uib.ecmanager.common.enums.OrderStatus;
 import com.uib.ecmanager.common.enums.PaymentStatus;
 import com.uib.ecmanager.common.enums.ShippingStatus;

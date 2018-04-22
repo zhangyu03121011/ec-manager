@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.uib.common.utils.DigestUtil;
+import com.common.util.DigestUtil;
 import com.uib.ecmanager.common.config.Global;
 import com.uib.ecmanager.common.enums.ApproveFlag;
 import com.uib.ecmanager.common.enums.UserType;

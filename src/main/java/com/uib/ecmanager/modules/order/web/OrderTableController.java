@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.uib.common.utils.StringUtil;
+import com.common.util.StringUtil;
 import com.uib.ecmanager.common.config.Global;
 import com.uib.ecmanager.common.enums.OrderSource;
 import com.uib.ecmanager.common.enums.OrderStatus;
@@ -284,7 +284,7 @@ public class OrderTableController extends BaseController {
 					}
 					//已退货数量 分销商名称 分销商手机号
 					//distributorPhone distributorName returnQuantity
-					if(orderTable!=null && (StringUtils.isNoneBlank(orderTable.getSupplierId()))){
+					if(orderTable!=null && (StringUtils.isNotBlank(orderTable.getSupplierId()))){
 						Supplier s=supplierService.get(orderTable.getSupplierId());
 						product.setDistributorName(s.getPrincipalName());
 						product.setDistributorPhone(s.getPrincipalPhone());

@@ -2,14 +2,19 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.uib</groupId>
-    <version>0.0.1</version>
-    <artifactId>uibbusiness</artifactId>
-  </parent>
+<!--   <parent> -->
+<!--     <groupId>com.uib</groupId> -->
+<!--     <version>0.0.1</version> -->
+<!--     <artifactId>uibbusiness</artifactId> -->
+<!--   </parent> -->
   <!-- <groupId>com.uib</groupId> -->
+  <parent>
+    <groupId>com.cwj</groupId>
+    <version>0.0.1</version>
+    <artifactId>cwj-business</artifactId>
+  </parent>
   <artifactId>ec-manager</artifactId>
-  <!-- <version>0.0.1</version> -->
+  <version>0.0.1</version>
   <packaging>war</packaging>
   <name>ec-manager Maven Webapp</name>
   <url>http://maven.apache.org</url>
@@ -22,13 +27,13 @@
  		<repository>
 			<id>Local Repositories</id>
 			<name>Team Local Repository</name>
-			<url>file://F:\BaiduYunDownload\repository2</url>
+			<url>file://G:\baiduyunpan\apache-maven-repository\repository2</url>
 		</repository>
-		<repository>
-			<id>Public Repositories</id>
-			<name>Team Nexus Repository</name>
-			<url>http://10.4.1.206:8888/nexus/content/groups/public/</url>
-		</repository> 
+<!-- 		<repository> -->
+<!-- 			<id>Public Repositories</id> -->
+<!-- 			<name>Team Nexus Repository</name> -->
+<!-- 			<url>http://10.4.1.206:8888/nexus/content/groups/public/</url> -->
+<!-- 		</repository>  -->
   	</repositories>
 	<!-- 设定插件仓库 -->
 	<pluginRepositories> 
@@ -352,46 +357,6 @@
 		</dependency>
 		<!-- LOGGING end -->
 		
-		<!-- GENERAL UTILS begin -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>${commons-io.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>${commons-codec.version}</version>
-		</dependency>
-		<dependency>
-		    <groupId>commons-fileupload</groupId>
-		    <artifactId>commons-fileupload</artifactId>
-		    <version>${commons-fileupload.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-			<version>${commons-beanutils.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		
-		<!-- google java lib -->
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>${guava.version}</version>
-		</dependency>
-		
 		<!-- jackson json -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -541,9 +506,9 @@
 		
 		<!-- User Agent -->
 		<dependency>
-			<groupId>bitwalker</groupId>
-			<artifactId>UserAgentUtils</artifactId>
-			<version>1.13</version>
+		  <groupId>eu.bitwalker</groupId>
+		  <artifactId>UserAgentUtils</artifactId>
+		  <version>1.14</version>
 		</dependency>
 		
 		<dependency>
@@ -552,9 +517,15 @@
 			<version>1.1.1</version>
 		</dependency>
 		<dependency>
-			<groupId>com.uib</groupId>
-			<artifactId>uib-common</artifactId>
+			<groupId>com.cwj</groupId>
+			<artifactId>cwj-common</artifactId>
 			<version>0.0.1</version>
+			<exclusions>
+					<exclusion>
+	            		<groupId>org.springframework.boot</groupId>
+	            		<artifactId>spring-boot-starter-web</artifactId>
+	            	</exclusion>
+            	</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.im4java</groupId>
@@ -623,9 +594,9 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>com.uib</groupId>
-		    <artifactId>fastdfs-client</artifactId>
-		    <version>1.0</version>
+		    <groupId>org.csource</groupId>
+			  <artifactId>fastdfs-client-java</artifactId>
+			  <version>1.27-SNAPSHOT</version>
 		</dependency>
 		
 		<!-- dubbo -->
@@ -670,15 +641,41 @@
 		     <version>1.0.8</version>  
 		 </dependency>
 		 
-		<dependency>
-			<groupId>com.uib</groupId>
-			<artifactId>pbyt-interface</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.uib</groupId> -->
+<!-- 			<artifactId>pbyt-interface</artifactId> -->
+<!-- 			<version>0.0.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
+		
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.uib</groupId> -->
+<!-- 		    <version>0.0.1</version> -->
+<!-- 		    <artifactId>uibbusiness</artifactId> -->
+<!-- 		</dependency> -->
 		
   </dependencies>
   <build>
     <finalName>ec-manager</finalName>
+    <plugins>
+        <plugin>  
+            <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-compiler-plugin</artifactId>
+             <version>3.1</version>
+             <configuration>
+                 <source>1.8</source>
+                 <target>1.8</target>
+                 <encoding>utf-8</encoding>
+             </configuration>
+        </plugin> 
+		<plugin>    
+		    <groupId>org.apache.maven.plugins</groupId>    
+		    <artifactId>maven-surefire-plugin</artifactId>    
+		    <configuration>
+		    	<!-- 跳过单元测试 -->
+		        <skip>true</skip>    
+		    </configuration>    
+		</plugin>
+    </plugins>
   </build>
   
 </project>

@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;
-import com.uib.common.utils.StringUtil;
+import com.common.util.StringUtil;
 import com.uib.ecmanager.common.config.Global;
 import com.uib.ecmanager.modules.sys.security.SystemAuthorizingRealm.Principal;
 import com.uib.ecmanager.modules.sys.utils.UserUtils;

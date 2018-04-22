@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.uib.common.utils.StringUtil;
+import com.common.util.StringUtil;
 import com.uib.ecmanager.common.persistence.Page;
 import com.uib.ecmanager.common.web.BaseController;
 import com.uib.ecmanager.modules.coupon.dao.CouponCodeDao;
@@ -74,7 +74,7 @@ public class CouponCodeController extends BaseController {
 			c.setOrderNoList(orderTableList);
 			MemMember memMember = c.getMemMember();
 			//处理微信昵称
-			if(null != memMember && StringUtil.isNoneEmpty(memMember.getUsername())) {
+			if(null != memMember && StringUtil.isNotEmpty(memMember.getUsername())) {
 				try {
 					memMember.setUsername(URLDecoder.decode(memMember.getUsername(), "utf-8"));
 				} catch (UnsupportedEncodingException e) {

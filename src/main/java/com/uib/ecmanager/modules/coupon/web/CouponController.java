@@ -37,7 +37,6 @@ import com.uib.ecmanager.modules.product.entity.Special;
 import com.uib.ecmanager.modules.product.service.ProductService;
 import com.uib.ecmanager.modules.product.service.SpecialService;
 import com.uib.ecmanager.modules.sys.service.SystemService;
-import com.uib.pbyt.service.ICreateCouponService;
 
 /**
  * 优惠券Controller
@@ -60,8 +59,8 @@ public class CouponController extends BaseController {
 	private SpecialService specialService;
 	@Autowired
 	private ProductService productService;
-	@Autowired
-	private ICreateCouponService createCouponService;
+//	@Autowired
+//	private ICreateCouponService createCouponService;
 	
 	@ModelAttribute
 	public Coupon get(@RequestParam(required=false) String id) {
@@ -105,7 +104,7 @@ public class CouponController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Coupon coupon, Model model) {
 		model.addAttribute("coupon", coupon);
-		if(StringUtils.isNoneBlank(coupon.getId())){
+		if(StringUtils.isNotBlank(coupon.getId())){
 			Integer totalSum=couponCodeService.totalCount(coupon);
 			coupon.setIsUsed("0");
 			Integer noUserSum=couponCodeService.totalCount(coupon);
@@ -178,7 +177,7 @@ public class CouponController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(Coupon coupon, RedirectAttributes redirectAttributes) {
 		//判断在有效期内的优惠劵不能删除
-		if(StringUtils.isNoneBlank(coupon.getId())){
+		if(StringUtils.isNotBlank(coupon.getId())){
 			long star_date=coupon.getBeginDate().getTime();
 			long end_date=coupon.getEndDate().getTime();
 			long now_date=new Date().getTime();
@@ -241,12 +240,12 @@ public class CouponController extends BaseController {
 		}
 		
 		//调用ec-pbyt-front接口把生成的优惠券放入spring容器，以便前端用户领取优惠券
-		try {
-			createCouponService.addCoupon(id,flag);
-		} catch (Exception e) {
-			logger.error("把优惠码放入ec-pbyt-front容器异常:{}",e);
-			addMessage(redirectAttributes, "生成优惠码失败，调用ec-pbyt-front dubbo接口addCoupon出错");
-		}
+//		try {
+//			createCouponService.addCoupon(id,flag);
+//		} catch (Exception e) {
+//			logger.error("把优惠码放入ec-pbyt-front容器异常:{}",e);
+//			addMessage(redirectAttributes, "生成优惠码失败，调用ec-pbyt-front dubbo接口addCoupon出错");
+//		}
 		
 		return "redirect:"+Global.getAdminPath()+"/coupon/coupon/?repage";
 	}

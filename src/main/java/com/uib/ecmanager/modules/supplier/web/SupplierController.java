@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.common.util.RandomUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.uib.common.utils.RandomUtil;
 import com.uib.ecmanager.common.config.Global;
 import com.uib.ecmanager.common.persistence.Page;
 import com.uib.ecmanager.common.utils.StringUtils;
